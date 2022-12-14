@@ -5,8 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     CharacterController characterController;
-
     Vector3 moveDirection;
+    public int playerSpeed;
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -19,6 +20,6 @@ public class Player : MonoBehaviour
         float z = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector3(x, 0, z);
 
-        characterController.Move(moveDirection * 10 * Time.deltaTime);
+        characterController.Move(moveDirection * playerSpeed * Time.deltaTime);
     }
 }
