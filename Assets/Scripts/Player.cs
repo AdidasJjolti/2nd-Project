@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
         characterController.Move(moveDirection * playerSpeed * Time.deltaTime);
 
-        moveDirection.y = 0;
+        //moveDirection.y = 0;
 
         if(moveDirection != Vector3.zero)
         {
