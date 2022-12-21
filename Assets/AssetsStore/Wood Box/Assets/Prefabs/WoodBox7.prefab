@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4303152131849980}
   - component: {fileID: 33709088978030418}
   - component: {fileID: 23581482776522572}
+  - component: {fileID: 3644551358759411895}
   m_Layer: 0
   m_Name: WoodBox7
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3644551358759411895
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478938287273370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2205913, y: 0.6102958, z: 0.9154437}
+  m_Center: {x: -0.000000059604645, y: 0.305148, z: 0}

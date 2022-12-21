@@ -49,5 +49,14 @@ public class Player : MonoBehaviour
         }
 
         animator.SetBool("isMoving", moveDirection != Vector3.zero);
+
+        Debug.DrawRay(transform.position + new Vector3(0,5,0), transform.forward * 10, new Color(1,0,0));
+
+        RaycastHit hitInfo;
+
+        if(Physics.Raycast(transform.position + new Vector3(0, 5, 0), transform.forward * 10, out hitInfo, 10))
+        {
+            Debug.Log(hitInfo.transform.parent.name);
+        }
     }
 }
