@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip BGMClip;            // 브금 오디오 소스
     [SerializeField] private AudioClip[] audioClip;        // 효과음 오디오 소스
+
+    [SerializeField] private Slider BGMSlider;             // 브금 볼륨 조절 슬라이더
+    private float bgmVolume = 1;                           // 기본 볼륨값 1로 지정
+
+    [SerializeField] private Slider SFXSlider;             // 효과음 볼륨 조절 슬라이더
+    private float sfxVolume = 1;                           // 기본 볼륨값 1로 지정
 
     Dictionary<string, AudioClip> audioClipsDic;
     AudioSource bgmPlayer;
@@ -73,6 +80,31 @@ public class SoundManager : MonoBehaviour
     //    }
     //}
 
+    
+
+    void Start()
+    {
+        if(bgmPlayer != null)
+        {
+            bgmPlayer.Play();
+        }
+
+        bgmPlayer.volume = BGMSlider.value;
+        bgmVolume = BGMSlider.value;
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+
+        sfxPlayer.volume = SFXSlider.value;
+        sfxVolume = SFXSlider.value;
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+    }
+
+    void Update()
+    {
+        OnClickESC();
+        SetBGMSlider();
+        SetSFXSlider();
+    }
+
     void SetupBGM()
     {
         if (BGMClip == null)
@@ -87,23 +119,26 @@ public class SoundManager : MonoBehaviour
 
     void OnClickESC()           // 테스트용 효과음 재생 함수
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             AudioClip escapeSound = audioClip[0];
             sfxPlayer.PlayOneShot(escapeSound);
         }
     }
 
-    void Start()
+    void SetBGMSlider()
     {
-        if(bgmPlayer != null)
-        {
-            bgmPlayer.Play();
-        }
+        bgmPlayer.volume = BGMSlider.value;
+
+        bgmVolume = BGMSlider.value;
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+    }
+    void SetSFXSlider()
+    {
+        sfxPlayer.volume = SFXSlider.value;
+
+        sfxVolume = SFXSlider.value;
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
     }
 
-    void Update()
-    {
-        OnClickESC();
-    }
 }
