@@ -1,22 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
+using System.IO;
 
 public class CookingAppliances : MonoBehaviour
 {
     enum eApplianceType
     {
-        FRYING_PAN = 0,
+        STOVE = 0,
         OVEN,
         DOUGH,
-        STOVE
+        FRYING_PAN
     }
 
-    void Start()
+    enum eIngredientType
     {
-        
+        LETTUCE = 0,
+        MEAT,
+        TOMATO,
+        EGG,
+        FLOUR,
+        POTATO
     }
 
+    List<int> recipeList;
+
+    void Awake()
+    {
+
+    }
 
     void Update()
     {
