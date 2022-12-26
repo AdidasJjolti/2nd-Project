@@ -9,11 +9,19 @@ public class Player : MonoBehaviour
     public int playerSpeed;
     Animator animator;
 
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-     }
+    }
+
+    void Start()
+    {
+        var dicResult = CSVReader.Read("recipe");
+        Debug.Log(dicResult[(1,0)]);
+        Debug.Log(dicResult[(1,1)]);
+    }
 
     void Update()
     {
