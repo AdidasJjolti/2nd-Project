@@ -9,6 +9,12 @@ public class Player : MonoBehaviour
     public int playerSpeed;
     Animator animator;
 
+    [SerializeField] private GameObject[] Ingredients;
+    [SerializeField] private Transform IngredientPoint;
+
+    GameObject meat;
+
+    bool isHavingIngredient;
 
     void Awake()
     {
@@ -25,6 +31,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0)
+            return;
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector3(x, 0, z);
@@ -47,7 +56,7 @@ public class Player : MonoBehaviour
 
         //moveDirection.y = 0;
 
-        if(moveDirection != Vector3.zero)
+        if (moveDirection != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(moveDirection);
         }
@@ -58,13 +67,51 @@ public class Player : MonoBehaviour
 
         animator.SetBool("isMoving", moveDirection != Vector3.zero);
 
-        Debug.DrawRay(transform.position + new Vector3(0,5,0), transform.forward * 10, new Color(1,0,0));
+        Debug.DrawRay(transform.position + new Vector3(0, 5, 0), transform.forward * 10, new Color(1, 0, 0));
 
         RaycastHit hitInfo;
 
-        if(Physics.Raycast(transform.position + new Vector3(0, 5, 0), transform.forward * 10, out hitInfo, 10))
+        if (Physics.Raycast(transform.position + new Vector3(0, 5, 0), transform.forward * 10, out hitInfo, 10))
         {
             Debug.Log(hitInfo.transform.parent.name);
+
+            if(hitInfo.transform.parent.name == "LettuceBox")
+            {
+                Debug.Log("Got a lettuce");
+            }
+            else if (hitInfo.transform.parent.name == "PorkBox")
+            {
+                if (isHavingIngredient)
+                {
+                    Debug.Log("Already Got one");
+                    return;
+                }
+
+                Debug.Log("Got a piece of meat");
+
+                meat = Instantiate(Ingredients[0], IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+                meat.transform.parent = IngredientPoint.transform;
+                meat.transform.localPosition = Vector3.zero;
+                isHavingIngredient = true;
+            }
+            else if (hitInfo.transform.parent.name == "TomatoBox")
+            {
+                Debug.Log("Got a tomato");
+            }
+            else if (hitInfo.transform.parent.name == "EggBox")
+            {
+                Debug.Log("Got an egg");
+            }
+            else if (hitInfo.transform.parent.name == "FlourBox")
+            {
+                Debug.Log("Got a bag of flour");
+            }
+            else if (hitInfo.transform.parent.name == "PotatoBox")
+            {
+                Debug.Log("Got a potato");
+            }
+
         }
     }
+
 }
