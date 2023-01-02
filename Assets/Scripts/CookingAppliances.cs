@@ -12,15 +12,6 @@ public enum eApplianceType
     FRYING_PAN
 }
 
-public enum eIngredientType
-{
-    LETTUCE = 0,
-    MEAT,
-    TOMATO,
-    EGG,
-    FLOUR,
-    POTATO
-}
 
 public class CookingAppliances : MonoBehaviour
 {
