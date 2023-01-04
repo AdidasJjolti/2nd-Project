@@ -75,18 +75,19 @@ public class Player : MonoBehaviour
         {
             //Debug.Log(hitInfo.transform.parent.name);
 
+            // Transform child out of bounds 발생하여 주석 처리
             //GameObject target = null;
-            //for(int i = 0; i < hitInfo.transform.parent.childCount; i++)
+            //for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
             //{
-            //    if(hitInfo.transform.GetChild(i).GetComponent<Lettuce>() && Input.GetKey(KeyCode.Space))
+            //    if (hitInfo.transform.GetChild(i).GetComponent<Lettuce>())
             //    {
-            //        target = transform.GetChild(i).gameObject;
+            //        target = hitInfo.transform.GetChild(i).gameObject;
             //        break;
             //    }
             //}
 
-
-            if(hitInfo.transform.root.GetComponentInChildren<Lettuce>() && Input.GetKey(KeyCode.Space))
+            // root에서 찾으면 클래스를 가진 오브젝트를 전부 찾기 때문에 가장 첫번째에 위치한 양배추만 나오는 현상 발생하여 parent로 수정
+            if (hitInfo.transform.parent.GetComponentInChildren<Lettuce>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -96,7 +97,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got a piece of lettuce");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Lettuce>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Lettuce>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -110,7 +111,7 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-            else if (hitInfo.transform.root.GetComponentInChildren<Pork>() && Input.GetKey(KeyCode.Space))
+            else if (hitInfo.transform.parent.GetComponentInChildren<Pork>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -120,7 +121,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got a piece of pork");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Pork>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Pork>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -134,7 +135,7 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-            else if (hitInfo.transform.root.GetComponentInChildren<Tomato>() && Input.GetKey(KeyCode.Space))
+            else if (hitInfo.transform.parent.GetComponentInChildren<Tomato>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -144,7 +145,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got a tomato");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Tomato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Tomato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -158,7 +159,7 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-            else if (hitInfo.transform.root.GetComponentInChildren<Egg>() && Input.GetKey(KeyCode.Space))
+            else if (hitInfo.transform.parent.GetComponentInChildren<Egg>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got an egg");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Egg>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Egg>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -182,7 +183,7 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-            else if (hitInfo.transform.root.GetComponentInChildren<Flour>() && Input.GetKey(KeyCode.Space))
+            else if (hitInfo.transform.parent.GetComponentInChildren<Flour>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -192,7 +193,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got a bag of flour");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Flour>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Flour>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -206,7 +207,7 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-            else if (hitInfo.transform.root.GetComponentInChildren<Potato>() && Input.GetKey(KeyCode.Space))
+            else if (hitInfo.transform.parent.GetComponentInChildren<Potato>() && Input.GetKey(KeyCode.Space))
             {
                 if (isHavingIngredient)
                 {
@@ -216,7 +217,7 @@ public class Player : MonoBehaviour
 
                 Debug.Log("Got a potato");
 
-                GameObject obj = hitInfo.transform.root.GetComponentInChildren<Potato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Potato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
                 possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
@@ -230,8 +231,6 @@ public class Player : MonoBehaviour
                 possesingIngredient.transform.localPosition = Vector3.zero;
                 isHavingIngredient = true;
             }
-
         }
     }
-
 }
