@@ -73,164 +73,175 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(transform.position + new Vector3(0, 5, 0), transform.forward * 10, out hitInfo, 10))
         {
-            //Debug.Log(hitInfo.transform.parent.name);
+            GameObject target = null;
 
-            // Transform child out of bounds 발생하여 주석 처리
-            //GameObject target = null;
-            //for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
-            //{
-            //    if (hitInfo.transform.GetChild(i).GetComponent<Lettuce>())
-            //    {
-            //        target = hitInfo.transform.GetChild(i).gameObject;
-            //        break;
-            //    }
-            //}
+            for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
+            {
+                if (hitInfo.transform.parent.GetChild(i).GetComponent<Lettuce>() || GetComponent<Pork>() || GetComponent<Tomato>() || GetComponent<Egg>() || GetComponent<Flour>() || GetComponent<Potato>())
+                {
+                    target = hitInfo.transform.parent.GetChild(i).gameObject;
+                    break;
+                }
+            }
+
+            possesingIngredient = Instantiate(target, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+
+            Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+
+            possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+
+            possesingIngredient.transform.parent = IngredientPoint.transform;
+            possesingIngredient.transform.localPosition = Vector3.zero;
+            isHavingIngredient = true;
+
 
             // root에서 찾으면 클래스를 가진 오브젝트를 전부 찾기 때문에 가장 첫번째에 위치한 양배추만 나오는 현상 발생하여 parent로 수정
-            if (hitInfo.transform.parent.GetComponentInChildren<Lettuce>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
+            //if (hitInfo.transform.parent.GetComponentInChildren<Lettuce>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
 
-                Debug.Log("Got a piece of lettuce");
+            //    Debug.Log("Got a piece of lettuce");
 
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Lettuce>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
-
-
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
-
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
-
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
-            else if (hitInfo.transform.parent.GetComponentInChildren<Pork>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
-
-                Debug.Log("Got a piece of pork");
-
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Pork>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Lettuce>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
 
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
 
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
-            else if (hitInfo.transform.parent.GetComponentInChildren<Tomato>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
+            //else if (hitInfo.transform.parent.GetComponentInChildren<Pork>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
 
-                Debug.Log("Got a tomato");
+            //    Debug.Log("Got a piece of pork");
 
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Tomato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
-
-
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
-
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
-
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
-            else if (hitInfo.transform.parent.GetComponentInChildren<Egg>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
-
-                Debug.Log("Got an egg");
-
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Egg>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Pork>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
 
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
 
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
-            else if (hitInfo.transform.parent.GetComponentInChildren<Flour>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
+            //else if (hitInfo.transform.parent.GetComponentInChildren<Tomato>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
 
-                Debug.Log("Got a bag of flour");
+            //    Debug.Log("Got a tomato");
 
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Flour>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
-
-
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
-
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
-
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
-            else if (hitInfo.transform.parent.GetComponentInChildren<Potato>() && Input.GetKey(KeyCode.Space))
-            {
-                if (isHavingIngredient)
-                {
-                    Debug.Log("Already Got one");
-                    return;
-                }
-
-                Debug.Log("Got a potato");
-
-                GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Potato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
-                possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Tomato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
 
-                Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
 
-                possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-                possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-                possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
 
-                possesingIngredient.transform.parent = IngredientPoint.transform;
-                possesingIngredient.transform.localPosition = Vector3.zero;
-                isHavingIngredient = true;
-            }
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
+            //else if (hitInfo.transform.parent.GetComponentInChildren<Egg>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
+
+            //    Debug.Log("Got an egg");
+
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Egg>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+
+
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
+            //else if (hitInfo.transform.parent.GetComponentInChildren<Flour>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
+
+            //    Debug.Log("Got a bag of flour");
+
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Flour>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+
+
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
+            //else if (hitInfo.transform.parent.GetComponentInChildren<Potato>() && Input.GetKey(KeyCode.Space))
+            //{
+            //    if (isHavingIngredient)
+            //    {
+            //        Debug.Log("Already Got one");
+            //        return;
+            //    }
+
+            //    Debug.Log("Got a potato");
+
+            //    GameObject obj = hitInfo.transform.parent.GetComponentInChildren<Potato>().gameObject;     // 가독성을 위해 지역 변수 초기화하여 Instantiate할 게임 오브젝트로 사용
+            //    possesingIngredient = Instantiate(obj, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+
+
+            //    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+
+            //    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+            //    possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);       // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            //    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+
+            //    possesingIngredient.transform.parent = IngredientPoint.transform;
+            //    possesingIngredient.transform.localPosition = Vector3.zero;
+            //    isHavingIngredient = true;
+            //}
         }
     }
 }
