@@ -2976,6 +2976,7 @@ MonoBehaviour:
   BGMClip: {fileID: 8300000, guid: a2de3d0df7df2ca44967f1833da59e32, type: 3}
   audioClip:
   - {fileID: 8300000, guid: 26b22464828c16842b594f4a52e1f191, type: 3}
+  - {fileID: 8300000, guid: 0835358b0eb6f5744ae6f59000ddd408, type: 3}
   BGMSlider: {fileID: 1611010059}
   SFXSlider: {fileID: 909830917}
 --- !u!4 &1010553507

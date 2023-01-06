@@ -117,13 +117,19 @@ public class SoundManager : MonoBehaviour
         bgmPlayer.volume = 1;
     }
 
-    void OnClickESC()           // 테스트용 효과음 재생 함수
+    void OnClickESC()           // 게임 세팅 팝업 오픈 효과음 재생
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             AudioClip escapeSound = audioClip[0];
             sfxPlayer.PlayOneShot(escapeSound);
         }
+    }
+
+    public void GetIngredient()
+    {
+        AudioClip getIngredientSound = audioClip[1];
+        sfxPlayer.PlayOneShot(getIngredientSound);
     }
 
     void SetBGMSlider()

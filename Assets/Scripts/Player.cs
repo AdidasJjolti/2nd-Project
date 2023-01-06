@@ -75,21 +75,66 @@ public class Player : MonoBehaviour
         {
             GameObject target = null;
 
-            for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
+            if (Input.GetKey(KeyCode.Space) && isHavingIngredient == false)            // 스페이스바 입력할 때 재료 보유중 상태가 아니면 재료 클래스 검사
             {
-                if (hitInfo.transform.parent.GetChild(i).GetComponent<Lettuce>() || GetComponent<Pork>() || GetComponent<Tomato>() || GetComponent<Egg>() || GetComponent<Flour>() || GetComponent<Potato>())
+                for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
                 {
-                    target = hitInfo.transform.parent.GetChild(i).gameObject;
-                    break;
+                    if (hitInfo.transform.parent.GetChild(i).GetComponent<Lettuce>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
+                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Pork>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
+                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Tomato>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
+                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Egg>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
+                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Flour>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
+                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Potato>())
+                    {
+                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        SoundManager.Instance.GetIngredient();
+                        break;
+                    }
                 }
             }
-
+            else
+                return;
+            
             possesingIngredient = Instantiate(target, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
 
             Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
 
             possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-            possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+
+            if(possesingIngredient.GetComponent<Lettuce>() || GetComponent<Pork>() || GetComponent<Tomato>())
+            {
+                possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+            }
+            else if(possesingIngredient.GetComponent<Egg>() || GetComponent<Flour>() || GetComponent<Potato>())
+            {
+                possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);    // possesingIngredient의 로컬 스케일을 3으로 설정 = 글로벌 스케일
+            }
+
             possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
 
             possesingIngredient.transform.parent = IngredientPoint.transform;
