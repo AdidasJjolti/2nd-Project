@@ -79,39 +79,41 @@ public class Player : MonoBehaviour
             {
                 for (int i = 0; i < hitInfo.transform.parent.childCount; i++)
                 {
-                    if (hitInfo.transform.parent.GetChild(i).GetComponent<Lettuce>())
+                    var trTarget = hitInfo.transform.parent.GetChild(i);               // 반복 코드를 변수로 만들어 가독성 ++
+
+                    if (trTarget.GetComponent<Lettuce>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
-                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Pork>())
+                    else if (trTarget.GetComponent<Pork>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
-                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Tomato>())
+                    else if (trTarget.GetComponent<Tomato>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
-                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Egg>())
+                    else if (trTarget.GetComponent<Egg>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
-                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Flour>())
+                    else if (trTarget.GetComponent<Flour>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
-                    else if (hitInfo.transform.parent.GetChild(i).GetComponent<Potato>())
+                    else if (trTarget.GetComponent<Potato>())
                     {
-                        target = hitInfo.transform.parent.GetChild(i).gameObject;
+                        target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                         break;
                     }
@@ -126,11 +128,11 @@ public class Player : MonoBehaviour
 
             possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
 
-            if(possesingIngredient.GetComponent<Lettuce>() || GetComponent<Pork>() || GetComponent<Tomato>())
+            if(possesingIngredient.GetComponent<Lettuce>() || possesingIngredient.GetComponent<Pork>() || possesingIngredient.GetComponent<Tomato>())
             {
                 possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
             }
-            else if(possesingIngredient.GetComponent<Egg>() || GetComponent<Flour>() || GetComponent<Potato>())
+            else if(possesingIngredient.GetComponent<Egg>() || possesingIngredient.GetComponent<Flour>() || possesingIngredient.GetComponent<Potato>())
             {
                 possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);    // possesingIngredient의 로컬 스케일을 3으로 설정 = 글로벌 스케일
             }
