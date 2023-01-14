@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         var dicResult = CSVReader.Read("recipe");
-        Debug.Log(dicResult[(1,0)]);
-        Debug.Log(dicResult[(1,1)]);
+        Debug.Log(dicResult[(1, 0)]);
+        Debug.Log(dicResult[(1, 1)]);
     }
 
     void Update()
@@ -69,45 +69,61 @@ public class Player : MonoBehaviour
 
         Debug.DrawRay(transform.position + new Vector3(0, 12, 0), transform.forward * 10, new Color(1, 0, 0));
 
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(transform.position + new Vector3(0, 12, 0), transform.forward * 15, out hitInfo, 10))
+        if (Input.GetKey(KeyCode.Space))
         {
-            GameObject target = null;
+            RaycastHit hitInfo;
 
-            if (Input.GetKey(KeyCode.Space) && isHavingIngredient == false)            // 스페이스바 입력할 때 재료 보유중 상태가 아니면 재료 클래스 검사
+            if (Physics.Raycast(transform.position + new Vector3(0, 12, 0), transform.forward * 15, out hitInfo, 10))
             {
-                var trTarget = hitInfo.transform;
+                Debug.Log(hitInfo.transform.name);
+                GameObject target = null;
 
-                if(trTarget.GetComponent<Lettuce>() || trTarget.GetComponent<Pork>() || trTarget.GetComponent<Tomato>() || trTarget.GetComponent<Egg>() || trTarget.GetComponent<Flour>() || trTarget.GetComponent<Potato>())
+                if (isHavingIngredient == false)            // 스페이스바 입력할 때 재료 보유중 상태가 아니면 재료 클래스 검사
                 {
-                    target = trTarget.gameObject;
-                    SoundManager.Instance.GetIngredient();
+                    var trTarget = hitInfo.transform;
+
+                    if (trTarget.GetComponent<Lettuce>() || trTarget.GetComponent<Pork>() || trTarget.GetComponent<Tomato>() || trTarget.GetComponent<Egg>() || trTarget.GetComponent<Flour>() || trTarget.GetComponent<Potato>())
+                    {
+                        target = trTarget.gameObject;
+                        SoundManager.Instance.GetIngredient();
+                    }
+                    else
+                        return;
+
+                    possesingIngredient = Instantiate(target, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
+                    possesingIngredient.GetComponent<BoxCollider>().enabled = false;
+
+                    Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
+
+                    possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
+
+                    if (possesingIngredient.GetComponent<Lettuce>() || possesingIngredient.GetComponent<Pork>() || possesingIngredient.GetComponent<Tomato>())
+                    {
+                        possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
+                    }
+                    else if (possesingIngredient.GetComponent<Egg>() || possesingIngredient.GetComponent<Flour>() || possesingIngredient.GetComponent<Potato>())
+                    {
+                        possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);    // possesingIngredient의 로컬 스케일을 3으로 설정 = 글로벌 스케일
+                    }
+
+                    possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
+
+                    possesingIngredient.transform.parent = IngredientPoint.transform;
+                    possesingIngredient.transform.localPosition = Vector3.zero;
+
+                    isHavingIngredient = true;
+                }
+                else
+                {
+                    var trTarget = hitInfo.transform;
+
+                    if (trTarget.GetComponent<TrashCan>() && possesingIngredient != null)
+                    {
+                        Destroy(possesingIngredient);
+                        isHavingIngredient = false;
+                    }
                 }
             }
-            else
-                return;
-            
-            possesingIngredient = Instantiate(target, IngredientPoint.transform.position, IngredientPoint.transform.rotation);
-
-            Transform parent = possesingIngredient.transform.parent;                  // parent 지역 변수를 IngredientPoint로 설정
-
-            possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
-
-            if(possesingIngredient.GetComponent<Lettuce>() || possesingIngredient.GetComponent<Pork>() || possesingIngredient.GetComponent<Tomato>())
-            {
-                possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
-            }
-            else if(possesingIngredient.GetComponent<Egg>() || possesingIngredient.GetComponent<Flour>() || possesingIngredient.GetComponent<Potato>())
-            {
-                possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);    // possesingIngredient의 로컬 스케일을 3으로 설정 = 글로벌 스케일
-            }
-
-            possesingIngredient.transform.parent = parent;                            // 다시 IngredientPoint를 IngredientPoint로 초기화, Player의 자식 오브젝트로 복귀
-
-            possesingIngredient.transform.parent = IngredientPoint.transform;
-            possesingIngredient.transform.localPosition = Vector3.zero;
-            isHavingIngredient = true;
         }
     }
 }
