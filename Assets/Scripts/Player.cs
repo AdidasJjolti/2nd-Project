@@ -81,9 +81,11 @@ public class Player : MonoBehaviour
                 if (isHavingIngredient == false)            // 스페이스바 입력할 때 재료 보유중 상태가 아니면 재료 클래스 검사
                 {
                     var trTarget = hitInfo.transform;
+                    eIngredientType ingredientType = eIngredientType.NONE;
 
-                    if (trTarget.GetComponent<Lettuce>() || trTarget.GetComponent<Pork>() || trTarget.GetComponent<Tomato>() || trTarget.GetComponent<Egg>() || trTarget.GetComponent<Flour>() || trTarget.GetComponent<Potato>())
+                    if (trTarget.GetComponent<Ingredient>())//) || trTarget.GetComponent<Pork>() || trTarget.GetComponent<Tomato>() || trTarget.GetComponent<Egg>() || trTarget.GetComponent<Flour>() || trTarget.GetComponent<Potato>())
                     {
+                        ingredientType = trTarget.GetComponent<Ingredient>().GetIngredientType();
                         target = trTarget.gameObject;
                         SoundManager.Instance.GetIngredient();
                     }
@@ -97,11 +99,11 @@ public class Player : MonoBehaviour
 
                     possesingIngredient.transform.parent = null;                              // IngredientPoint를 루트 오브젝트로 설정
 
-                    if (possesingIngredient.GetComponent<Lettuce>() || possesingIngredient.GetComponent<Pork>() || possesingIngredient.GetComponent<Tomato>())
+                    if (ingredientType == eIngredientType.LETTUCE || ingredientType == eIngredientType.PORK || ingredientType == eIngredientType.TOMATO)       //possesingIngredient.GetComponent<Lettuce>() || possesingIngredient.GetComponent<Pork>() || possesingIngredient.GetComponent<Tomato>())
                     {
                         possesingIngredient.transform.localScale = new Vector3(50f, 50f, 50f);    // possesingIngredient의 로컬 스케일을 50으로 설정 = 글로벌 스케일
                     }
-                    else if (possesingIngredient.GetComponent<Egg>() || possesingIngredient.GetComponent<Flour>() || possesingIngredient.GetComponent<Potato>())
+                    else if (ingredientType == eIngredientType.EGG || ingredientType == eIngredientType.FLOUR || ingredientType == eIngredientType.POTATO) // possesingIngredient.GetComponent<Egg>() || possesingIngredient.GetComponent<Flour>() || possesingIngredient.GetComponent<Potato>())
                     {
                         possesingIngredient.transform.localScale = new Vector3(3f, 3f, 3f);    // possesingIngredient의 로컬 스케일을 3으로 설정 = 글로벌 스케일
                     }

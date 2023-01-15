@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4528521034461801589}
   - component: {fileID: 6376007687984572327}
   - component: {fileID: 6244178188533310318}
+  - component: {fileID: 5222499378661244938}
   m_Layer: 0
   m_Name: Flour
   m_TagString: Untagged
@@ -106,8 +107,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686576923487024632}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffe8582dbb77125429e2c1d6d9f265cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5222499378661244938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686576923487024632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ed8fb1c3f3ced429a2c2d657f327c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientType: 4

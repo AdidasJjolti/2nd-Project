@@ -201,7 +201,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_LocalScale.x
@@ -589,7 +589,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_LocalScale.x
@@ -3609,7 +3609,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_LocalScale.x
@@ -4083,7 +4083,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3367368171585680028, guid: c2104e73799cbc741af69b5492563c32, type: 3}
       propertyPath: m_LocalScale.x
@@ -5680,6 +5680,10 @@ PrefabInstance:
     - target: {fileID: 5817707753014846839, guid: cf620bef4271396498bb45e443c090fe, type: 3}
       propertyPath: m_Name
       value: Lettuce
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817707753014846839, guid: cf620bef4271396498bb45e443c090fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf620bef4271396498bb45e443c090fe, type: 3}

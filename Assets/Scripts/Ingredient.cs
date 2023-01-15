@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum eIngredientType
+{
+    NONE = -1,
+    LETTUCE = 0,
+    PORK,
+    TOMATO,
+    EGG,
+    FLOUR,
+    POTATO
+}
+
 public class Ingredient : MonoBehaviour
 {
-    public enum eIngredientType
-    {
-        LETTUCE = 0,
-        PORK,
-        TOMATO,
-        EGG,
-        FLOUR,
-        POTATO
-    }
+    [SerializeField] eIngredientType ingredientType;
+
 
     void Start()
     {
@@ -23,5 +28,10 @@ public class Ingredient : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public eIngredientType GetIngredientType()
+    {
+        return ingredientType;
     }
 }
