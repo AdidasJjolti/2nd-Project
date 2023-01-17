@@ -16,10 +16,14 @@ public class Player : MonoBehaviour
 
     bool isHavingIngredient;
 
+    public delegate void CookingEventHandler(GameObject objIngredient, GameObject appliance);      //함수의 모양, 원형을 정의
+    public static event CookingEventHandler StartCooking;                    //실행할 함수를 담는 틀
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        StartCooking += SetFood;
     }
 
     void Start()
@@ -124,8 +128,18 @@ public class Player : MonoBehaviour
                         Destroy(possesingIngredient);
                         isHavingIngredient = false;
                     }
+                    else if (trTarget.GetComponent<CookingAppliances>() && possesingIngredient != null)
+                    {
+                        StartCooking(possesingIngredient, trTarget.gameObject);          //StartCooking 내에 있는 모든 함수에게 possesingIngredient 전달
+                    }
                 }
             }
         }
+    }
+    
+    void SetFood(GameObject Ingredient, GameObject settingAppliance)
+    {
+        this.possesingIngredient = null;
+        isHavingIngredient = false;
     }
 }
