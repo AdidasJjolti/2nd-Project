@@ -14,10 +14,12 @@ public enum eIngredientType
     POTATO
 }
 
+
 public class Ingredient : MonoBehaviour
 {
     [SerializeField] eIngredientType ingredientType;
 
+    public bool isCooked;
 
     void Start()
     {

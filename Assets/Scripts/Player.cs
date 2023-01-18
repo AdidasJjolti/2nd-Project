@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     bool isHavingIngredient;
 
     public delegate void CookingEventHandler(GameObject objIngredient, GameObject appliance);      //함수의 모양, 원형을 정의
-    public static event CookingEventHandler StartCooking;                    //실행할 함수를 담는 틀
+    public static event CookingEventHandler StartCooking;                                                                          //실행할 함수를 담는 틀
 
     void Awake()
     {
@@ -141,5 +141,14 @@ public class Player : MonoBehaviour
     {
         this.possesingIngredient = null;
         isHavingIngredient = false;
+    }
+
+    //요리 완료된 재료를 가져오는 함수
+    void RetrieveFood(GameObject Ingredient, GameObject settingAppliance, eApplianceState appState)
+    {
+        if (Ingredient.GetComponent<Ingredient>().isCooked = true && settingAppliance.GetComponent<CookingAppliances>())
+        {
+
+        }
     }
 }
