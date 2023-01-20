@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     GameObject possesingIngredient;
 
-    bool isHavingIngredient;
+    [SerializeField] private bool isHavingIngredient;
 
     public delegate void CookingEventHandler(GameObject objIngredient, GameObject appliance);               //함수의 모양, 원형을 정의
     public static event CookingEventHandler StartCooking;                                                   //실행할 함수를 담는 틀
@@ -88,6 +88,33 @@ public class Player : MonoBehaviour
                     else if (trTarget.GetComponent<CookingAppliances>() && possesingIngredient != null)
                     {
                         StartCooking(possesingIngredient, trTarget.gameObject);          //StartCooking 내에 있는 모든 함수에게 possesingIngredient 전달
+                    }
+
+                    // 조리대에 재료 놓기
+                    else if (trTarget.GetComponent<CookingPlate>())
+                    {
+                        if(trTarget.GetComponent<CookingPlate>().GetCookingPlateState() == ePlateState.READY)
+                        {
+                            if (trTarget.GetChild(2).GetChild(0).childCount == 0)
+                            {
+                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(0);
+                                possesingIngredient.transform.localPosition = Vector3.zero;
+                            }
+                            else if (trTarget.GetChild(2).GetChild(1).childCount == 0)
+                            {
+                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(1);
+                                possesingIngredient.transform.localPosition = Vector3.zero;
+                            }
+                            else if (trTarget.GetChild(2).GetChild(2).childCount == 0)
+                            {
+                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(2);
+                                possesingIngredient.transform.localPosition = Vector3.zero;
+                            }
+
+                            isHavingIngredient = false;
+                            SoundManager.Instance.GetIngredient();
+                        }
+              
                     }
                 }
             }
