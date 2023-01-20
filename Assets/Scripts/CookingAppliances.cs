@@ -6,7 +6,7 @@ using System.IO;
 
 public enum eApplianceType
 {
-    STOVE = 0,
+    MICROWAVE = 0,
     OVEN,
     DOUGH,
     FRYING_PAN
@@ -34,6 +34,12 @@ public class CookingAppliances : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // 조리 기구의 상태를 넘겨줄 public 함수
+    public eApplianceState GetApplianceState()
+    {
+        return state;
     }
 
     //cookingIngredient = 조리 기구에 투입할 재료, 플레이어가 가지고 있는 재료 게임오브젝트
