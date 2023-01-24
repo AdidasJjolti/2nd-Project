@@ -16,8 +16,15 @@ public class Player : MonoBehaviour
 
     [SerializeField] private bool isHavingIngredient;
 
+    // 조리 기구 넣는 동작
     public delegate void CookingEventHandler(GameObject objIngredient, GameObject appliance);               //함수의 모양, 원형을 정의
     public static event CookingEventHandler StartCooking;                                                   //실행할 함수를 담는 틀
+
+    // 조리대에서 음식 완성하는 동작
+    public delegate bool SettingEventHandler(GameObject cookingPlate, GameObject objIngredient);
+    public static event SettingEventHandler CompleteFood;
+    public static event SettingEventHandler RetrieveFood;
+
 
     void Awake()
     {
@@ -42,7 +49,7 @@ public class Player : MonoBehaviour
 
         Debug.DrawRay(transform.position + new Vector3(0, 12, 0), transform.forward * 10, new Color(1, 0, 0));
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             RaycastHit hitInfo;
 
@@ -73,9 +80,29 @@ public class Player : MonoBehaviour
                             SoundManager.Instance.GetIngredient();
                         }
                     }
+                    else if (trTarget.GetComponent<CookingPlate>())
+                    {
+                        if (trTarget.GetComponent<CookingPlate>().GetCookingPlateState() == ePlateState.READY)
+                        {
+                            // CompleteFood의 return 자료형인 bool 값을 받아올 변수 설정
+                            bool result = CompleteFood(trTarget.gameObject, null);
+
+                            // result가 true인 경우 : 조리대에 재료 내려 놓기 성공
+                            if (result)
+                            {
+                                isHavingIngredient = false;
+                            }
+                        }
+                        else if(trTarget.GetComponent<CookingPlate>().GetCookingPlateState() == ePlateState.COMPLETE)
+                        {
+                            RetrieveFood(trTarget.gameObject, null);
+                        }
+                    }
                     else
                         return;
                 }
+
+                //플레이어가 재료를 가지고 있는 상태
                 else
                 {
                     var trTarget = hitInfo.transform;
@@ -95,26 +122,15 @@ public class Player : MonoBehaviour
                     {
                         if(trTarget.GetComponent<CookingPlate>().GetCookingPlateState() == ePlateState.READY)
                         {
-                            if (trTarget.GetChild(2).GetChild(0).childCount == 0)
-                            {
-                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(0);
-                                possesingIngredient.transform.localPosition = Vector3.zero;
-                            }
-                            else if (trTarget.GetChild(2).GetChild(1).childCount == 0)
-                            {
-                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(1);
-                                possesingIngredient.transform.localPosition = Vector3.zero;
-                            }
-                            else if (trTarget.GetChild(2).GetChild(2).childCount == 0)
-                            {
-                                possesingIngredient.transform.parent = trTarget.GetChild(2).GetChild(2);
-                                possesingIngredient.transform.localPosition = Vector3.zero;
-                            }
+                            // CompleteFood의 return 자료형인 bool 값을 받아올 변수 설정
+                            bool result = CompleteFood(trTarget.gameObject, possesingIngredient);
 
-                            isHavingIngredient = false;
-                            SoundManager.Instance.GetIngredient();
+                            // result가 true인 경우 : 조리대에 재료 내려 놓기 성공
+                            if (result)
+                            {
+                                isHavingIngredient = false;
+                            }
                         }
-              
                     }
                 }
             }

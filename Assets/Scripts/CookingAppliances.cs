@@ -45,7 +45,8 @@ public class CookingAppliances : MonoBehaviour
     //cookingIngredient = 조리 기구에 투입할 재료, 플레이어가 가지고 있는 재료 게임오브젝트
     void Cooking(GameObject cookingIngredient, GameObject cookingAppliance)
     {
-        if(cookingAppliance != gameObject)
+        // 플레이어가 접촉한 조리 기구와 자기 자신이 같은지 체크, 다른 조리 기구에서는 이벤트 동작하지 않음
+        if (cookingAppliance != gameObject)
         {
             return;
         }
