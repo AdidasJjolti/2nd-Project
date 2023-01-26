@@ -42,6 +42,11 @@ public class CookingAppliances : MonoBehaviour
         return state;
     }
 
+    public void SetApplianceReady()
+    {
+        state = eApplianceState.READY;
+    }
+
     //cookingIngredient = 조리 기구에 투입할 재료, 플레이어가 가지고 있는 재료 게임오브젝트
     void Cooking(GameObject cookingIngredient, GameObject cookingAppliance)
     {
@@ -51,7 +56,7 @@ public class CookingAppliances : MonoBehaviour
             return;
         }
 
-        StartCoroutine(isCooking(cookingIngredient));        
+        StartCoroutine(isCooking(cookingIngredient));
     }
 
     //objIngredient = cookingIngredient, 동일한 게임 오브젝트 (플레이어가 넣고자 하는 게임 오브젝트)
@@ -62,17 +67,19 @@ public class CookingAppliances : MonoBehaviour
         // 이미 요리 중이면 코루틴 실행하지 않음
         if(state == eApplianceState.COOKING)
         {
+            GameManager.Instance.missCount += 1;
             Debug.Log("Miss Count +1");
             Destroy(objIngredient);
-            yield return null;
+            yield break;
         }
 
         // (임시) 조리 기구가 요리중이 아닐 때, 이미 요리된 재료를 다시 넣으면 가진 재료 파괴하고 미스 카운트 +1
         if (objIngredient.GetComponent<Ingredient>().isCooked)
         {
+            GameManager.Instance.missCount += 1;
             Debug.Log("Miss Count +1");
             Destroy(objIngredient);
-            yield return null;
+            yield break;
         }
 
 
@@ -84,7 +91,7 @@ public class CookingAppliances : MonoBehaviour
         state = eApplianceState.COOKING;
         float waitTime = 0;
 
-        while (waitTime <= 10)
+        while (waitTime <= 100)
         {
             yield return new WaitForSeconds(0.01f);
             waitTime += 0.01f;

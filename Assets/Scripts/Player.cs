@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
                         {
                             trTarget.GetComponentInChildren<Ingredient>().transform.parent = IngredientPoint.transform;
                             isHavingIngredient = true;
+                            trTarget.GetComponent<CookingAppliances>().SetApplianceReady();
                             SoundManager.Instance.GetIngredient();
                         }
                     }
