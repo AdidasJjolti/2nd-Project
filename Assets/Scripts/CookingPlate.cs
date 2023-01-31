@@ -55,7 +55,7 @@ public class CookingPlate : MonoBehaviour
             return true;
         }
 
-        // ToDo : 레시피 체크해서 레시피에 맞는 재료인지 확인하고 맞는 음식으로 반환하는 코드 추가 필요
+        // ToDo : 레시피 체크해서 레시피에 맞는 재료인지 확인하고 맞는 음식으로 반환하는 코드 추가 필요, 맞는 레시피가 없으면 올려둔 재료를 모두 파괴하고 미스 카운트 +1
         else if (state == ePlateState.READY && possesingIngredient == null)
         {
             var ingredients = gameObject.GetComponentsInChildren<Ingredient>();

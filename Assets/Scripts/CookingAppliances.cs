@@ -7,7 +7,7 @@ using System.IO;
 public enum eApplianceType
 {
     MICROWAVE = 0,
-    OVEN,
+    STOVE,
     DOUGH,
     FRYING_PAN
 }
@@ -22,6 +22,7 @@ public enum eApplianceState
 public class CookingAppliances : MonoBehaviour
 {
     [SerializeField] eApplianceState state;
+    [SerializeField] eApplianceType applianceType;
     [SerializeField] private Transform cookingPoint;
     List<int> recipeList;
 

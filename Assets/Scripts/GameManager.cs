@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SettingsPopup;
     [SerializeField] private GameObject GameOverUI;
 
-    private float stageTime = 10;
+    private float maxstageTime = 10;
+    private float curstageTime;
+    [SerializeField] private Slider stageTimerSlider;
     [SerializeField] private TextMeshProUGUI stageTimer;
 
     public int missCount;
@@ -51,7 +53,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SettingsPopup.SetActive(false);
-        stageTime = 10;
+        maxstageTime = 10;
+    }
+
+    void Start()
+    {
+        curstageTime = maxstageTime;
     }
 
     void Update()
@@ -87,22 +94,27 @@ public class GameManager : MonoBehaviour
 
     void CountStageTime()
     {
-        if(stageTime >= 0)
+        if(curstageTime > 0)
         {
-            stageTime -= Time.deltaTime;
+            stageTimerSlider.transform.Find("Fill Area").gameObject.SetActive(true);
+            curstageTime -= Time.deltaTime;
+            stageTimerSlider.value = curstageTime / maxstageTime;
         }
         else
         {
-            stageTime = 0f;
-            if(isTimeCheat)
+            curstageTime = 0f;
+
+            if (isTimeCheat)
             {
                 return;
             }
+
             Time.timeScale = 0;
+            stageTimerSlider.transform.Find("Fill Area").gameObject.SetActive(false);
             OpenGameOverUI();
         }
 
-        stageTimer.text = ((int)stageTime).ToString();
+        stageTimer.text = ((int)curstageTime).ToString();
     }
 
     void OpenGameOverUI()
