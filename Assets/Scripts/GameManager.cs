@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI missCountText;
 
     public bool isTimeCheat;
+       
+     Dictionary<(int, int), int> dicRecipe;
 
     void Awake()
     {
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         curstageTime = maxstageTime;
+        dicRecipe = CSVReader.Read("recipe");
     }
 
     void Update()
@@ -142,5 +145,22 @@ public class GameManager : MonoBehaviour
     void CountMissCount()
     {
         missCountText.text = ((int)missCount).ToString();
+    }
+
+    /// <summary>
+    /// 재료id와 요리 기구id를 읍합한 결과 반환
+    /// </summary>
+    /// <param name="ingredientID"></param>
+    /// <param name="applianceID"></param>
+    /// <returns></returns>
+    public int GetAvailableID(int ingredientID, int applianceID)
+    {
+        // 읍합법에 있는 키 값을 보유하지 않으면 -1 값 반환
+        if(dicRecipe.ContainsKey((ingredientID, applianceID)) == false)
+        {
+            return -1;
+        }
+
+        return dicRecipe[(ingredientID, applianceID)];
     }
 }

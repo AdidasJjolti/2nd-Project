@@ -68,18 +68,28 @@ public class CookingAppliances : MonoBehaviour
         // 이미 요리 중이면 코루틴 실행하지 않음
         if(state == eApplianceState.COOKING)
         {
-            GameManager.Instance.missCount += 1;
-            Debug.Log("Miss Count +1");
-            Destroy(objIngredient);
+            AddMissCount(objIngredient);
             yield break;
         }
 
+        Ingredient ingre = objIngredient.GetComponent<Ingredient>();
         // (임시) 조리 기구가 요리중이 아닐 때, 이미 요리된 재료를 다시 넣으면 가진 재료 파괴하고 미스 카운트 +1
-        if (objIngredient.GetComponent<Ingredient>().isCooked)
+        if (ingre.isCooked)
         {
-            GameManager.Instance.missCount += 1;
-            Debug.Log("Miss Count +1");
-            Destroy(objIngredient);
+            AddMissCount(objIngredient);
+            yield break;
+        }
+
+        // 읍합법 키 값으로 반환된 결과값을 저장
+        int cookedIngredient = GameManager.Instance.GetAvailableID((int)ingre.GetIngredientType(), (int)applianceType);
+
+        // 읍합법 키 값으로 반환된 결과값이 0보다 크면 어떤 결과물이 나오는 정상 상황 
+        bool isCookable = cookedIngredient > 0;
+
+        // 조리할 수 없으면 재료 파괴, 미스 카운트 +1, 코루틴 탈출
+        if(!isCookable)
+        {
+            AddMissCount(objIngredient);
             yield break;
         }
 
@@ -99,5 +109,18 @@ public class CookingAppliances : MonoBehaviour
         }
 
         state = eApplianceState.COMPLETE;
+
+        // 요리될 예정인 재료의 ingredientType을 반환하기 위해 읍합법 키 값으로 반환된 결과값을 매개 변수로 전달
+        ingre.SetCookingResultID(cookedIngredient);
+
+        //Todo : objIngredient 파괴하고 조리 결과에 맞는 재료 프리팹 생성, cookingPoint의 자식 오브젝트로 생성
+        //       게임매니저 스크립트에서 저장한 프리팹을 생성
+    }
+
+    void AddMissCount(GameObject objIngredient)
+    {
+        GameManager.Instance.missCount += 1;
+        Debug.Log("Miss Count +1");
+        Destroy(objIngredient);
     }
 }

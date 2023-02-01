@@ -35,9 +35,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        var dicResult = CSVReader.Read("recipe");
-        Debug.Log(dicResult[(1, 0)]);
-        Debug.Log(dicResult[(1, 1)]);
+
     }
 
     void Update()

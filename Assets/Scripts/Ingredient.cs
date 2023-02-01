@@ -11,19 +11,28 @@ public enum eIngredientType
     TOMATO,
     EGG,
     FLOUR,
-    POTATO
+    POTATO,
+    
+    GRILLED_MEAT = 101,
+    GRILLED_TOMATO,
+    STEAMED_EGG,
+    FRIED_EGG,
+    PIZZA_DOUGH,
+    STEAMED_POTATO,
+    FRIED_POTATO
 }
 
 
 public class Ingredient : MonoBehaviour
 {
-    [SerializeField] eIngredientType ingredientType;
+    [SerializeField] eIngredientType ingreType;
 
     public bool isCooked;
+    int cookedIngredient;
 
     void Start()
     {
-        
+        cookedIngredient = (int)ingreType;
     }
 
 
@@ -34,6 +43,18 @@ public class Ingredient : MonoBehaviour
 
     public eIngredientType GetIngredientType()
     {
-        return ingredientType;
+        return ingreType;
+    }
+
+
+    // 요리된 재료의 ingredientID를 전달할 함수, 어떤 요리된 재료가 반환되었는지 체크할 때 사용
+    public void SetCookingResultID(int cookedID)
+    {
+        cookedIngredient = cookedID;
+    }
+
+    public int GetCookedID()
+    {
+        return cookedIngredient;
     }
 }
