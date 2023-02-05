@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
 
     public bool isTimeCheat;
        
-     Dictionary<(int, int), int> dicRecipe;
+    Dictionary<(int, int), int> dicRecipe;
+    Dictionary<(int, int, int), int> dicCompleteFood;
 
     void Awake()
     {
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         curstageTime = maxstageTime;
         dicRecipe = CSVReader.Read("recipe");
+        dicCompleteFood = CSVReader.ReadCompleteFood("complete_food");
     }
 
     void Update()
@@ -162,5 +164,21 @@ public class GameManager : MonoBehaviour
         }
 
         return dicRecipe[(ingredientID, applianceID)];
+    }
+
+    public int GetCompleteFoodID(int ingredient1ID, int ingredient2ID, int ingredient3ID)
+    {
+        List<int> tupleList = new List<int>();
+        tupleList.Add(ingredient1ID);
+        tupleList.Add(ingredient2ID);
+        tupleList.Add(ingredient3ID);
+        tupleList.Sort();
+
+        if (dicCompleteFood.ContainsKey((tupleList[0], tupleList[1], tupleList[2])) == false)
+        {
+            return -1;
+        }
+
+        return dicCompleteFood[(tupleList[0], tupleList[1], tupleList[2])];
     }
 }

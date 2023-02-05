@@ -12,7 +12,8 @@ public class CookingPlate : MonoBehaviour
 {
     [SerializeField] ePlateState state;
     [SerializeField] Transform[] cookingPoints;
-    [SerializeField] GameObject[] foods;        // 임시 코드
+    //[SerializeField] GameObject[] foods;        // 임시 코드
+
 
     void Start()
     {
@@ -55,18 +56,29 @@ public class CookingPlate : MonoBehaviour
             return true;
         }
 
-        // ToDo : 레시피 체크해서 레시피에 맞는 재료인지 확인하고 맞는 음식으로 반환하는 코드 추가 필요, 맞는 레시피가 없으면 올려둔 재료를 모두 파괴하고 미스 카운트 +1
         else if (state == ePlateState.READY && possesingIngredient == null)
         {
             var ingredients = gameObject.GetComponentsInChildren<Ingredient>();
+
+            int ingredient1ID = ingredients.Length > 0 && ingredients[0] != null ? ingredients[0].GetCookedID() : -1;
+            int ingredient2ID = ingredients.Length > 1 && ingredients[1] != null ? ingredients[1].GetCookedID() : -1;
+            int ingredient3ID = ingredients.Length > 2 && ingredients[2] != null ? ingredients[2].GetCookedID() : -1;
+
+            int completeFoodID = GameManager.Instance.GetCompleteFoodID(ingredient1ID, ingredient2ID, ingredient3ID);
 
             foreach (var item in ingredients)
             {
                 Destroy(item.gameObject);
             }
 
-            // ToDo : 임시로 넣은 샐러드 오브젝트 저장할 장소 구현
-            var newObj = Instantiate(foods[0], cookingPoints[0].position, cookingPoints[0].rotation);
+            // 맞는 레시피가 없으면 탈출
+            if (completeFoodID == -1)
+            {
+                GameManager.Instance.missCount++;      // 미스 카운트 UI 퀘스트를 위한 임시 코드, ToDo : 미스 카운트 UI 개선
+                return false;
+            }
+
+            var newObj = Instantiate(PrefabsManager.Instance.GetCookedPrefab(completeFoodID%100), cookingPoints[0].position, cookingPoints[0].rotation);
             newObj.transform.parent = cookingPoints[0];
             SoundManager.Instance.GetIngredient();
             state = ePlateState.COMPLETE;
