@@ -1970,6 +1970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 465479129}
   - component: {fileID: 465479128}
+  - component: {fileID: 465479130}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2011,6 +2012,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &465479130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465479127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1b9295c71a5284599e79dc3d469472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookedPrefabs:
+  - {fileID: 2167585477018787517, guid: 4ff3eeb68d5ed5c44b4e3c1816d9d309, type: 3}
+  - {fileID: 2612843521999986603, guid: 672dee187e5526248a0a66698e4a2d67, type: 3}
+  - {fileID: 5375070871823280610, guid: d3b1aae00724d8d46b20dcc8a6b5fa45, type: 3}
+  - {fileID: 6649807325703513982, guid: 6b2835014860c4542b54a90ceb21e859, type: 3}
+  - {fileID: 3853403765689606309, guid: 8b33e34ec5990da48adbe796206bc032, type: 3}
+  - {fileID: 3309692696946838617, guid: c2ab1412ef912ee4e87818cbc1562962, type: 3}
+  - {fileID: 4201934513215695567, guid: ecec4dafd54a065468c4729e0a7d00e4, type: 3}
 --- !u!1 &473541620
 GameObject:
   m_ObjectHideFlags: 0

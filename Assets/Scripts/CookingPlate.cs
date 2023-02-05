@@ -12,7 +12,7 @@ public class CookingPlate : MonoBehaviour
 {
     [SerializeField] ePlateState state;
     [SerializeField] Transform[] cookingPoints;
-    [SerializeField] GameObject[] foods;
+    [SerializeField] GameObject[] foods;        // 임시 코드
 
     void Start()
     {

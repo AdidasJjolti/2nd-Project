@@ -1,25 +1,25 @@
-Ingredient,Ingredient_id,Appliance,Appliance_id,Available
-lettuce,0,stove,0,0
-lettuce,0,oven,1,0
-lettuce,0,dough,2,0
-lettuce,0,frying_pan,3,0
-meat,1,stove,0,1
-meat,1,oven,1,0
-meat,1,dough,2,0
-meat,1,frying_pan,3,0
-tomato,2,stove,0,1
-tomato,2,oven,1,0
-tomato,2,dough,2,0
-tomato,2,frying_pan,3,0
-egg,3,stove,0,0
-egg,3,oven,1,0
-egg,3,dough,2,0
-egg,3,frying_pan,3,1
-flour,4,stove,0,0
-flour,4,oven,1,1
-flour,4,dough,2,1
-flour,4,frying_pan,3,0
-potato,5,stove,0,0
-potato,5,oven,1,0
-potato,5,dough,2,0
-potato,5,frying_pan,3,1
+Ingredient,Ingredient_id,Appliance,Appliance_id,Available,
+lettuce,0,stove,0,-1,
+lettuce,0,oven,1,-1,
+lettuce,0,dough,2,-1,
+lettuce,0,frying_pan,3,-1,
+meat,1,stove,0,100,grilled meat
+meat,1,oven,1,-1,
+meat,1,dough,2,-1,
+meat,1,frying_pan,3,-1,
+tomato,2,stove,0,101,grilled tomato
+tomato,2,oven,1,-1,
+tomato,2,dough,2,-1,
+tomato,2,frying_pan,3,-1,
+egg,3,stove,0,-1,
+egg,3,oven,1,102,steamed egg
+egg,3,dough,2,-1,
+egg,3,frying_pan,3,103,fried egg
+flour,4,stove,0,-1,
+flour,4,oven,1,-1,
+flour,4,dough,2,104,pizza dough
+flour,4,frying_pan,3,-1,
+potato,5,stove,0,-1,
+potato,5,oven,1,105,steamed potato
+potato,5,dough,2,-1,
+potato,5,frying_pan,3,106,fried potato

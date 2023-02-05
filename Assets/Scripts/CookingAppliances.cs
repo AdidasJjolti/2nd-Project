@@ -102,7 +102,7 @@ public class CookingAppliances : MonoBehaviour
         state = eApplianceState.COOKING;
         float waitTime = 0;
 
-        while (waitTime <= 100)
+        while (waitTime <= 5)
         {
             yield return new WaitForSeconds(0.01f);
             waitTime += 0.01f;
@@ -111,10 +111,15 @@ public class CookingAppliances : MonoBehaviour
         state = eApplianceState.COMPLETE;
 
         // 요리될 예정인 재료의 ingredientType을 반환하기 위해 읍합법 키 값으로 반환된 결과값을 매개 변수로 전달
-        ingre.SetCookingResultID(cookedIngredient);
+        //ingre.SetCookingResultID(cookedIngredient);
 
         //Todo : objIngredient 파괴하고 조리 결과에 맞는 재료 프리팹 생성, cookingPoint의 자식 오브젝트로 생성
         //       게임매니저 스크립트에서 저장한 프리팹을 생성
+        GameObject cooked = Instantiate(PrefabsManager.Instance.GetCookedPrefab(cookedIngredient % 100));
+        cooked.GetComponent<Ingredient>().isCooked = true;
+        cooked.transform.parent = cookingPoint;
+        cooked.transform.localPosition = new Vector3(0, 0, 0);
+        Destroy(objIngredient);
     }
 
     void AddMissCount(GameObject objIngredient)

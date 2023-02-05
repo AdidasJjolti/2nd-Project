@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
                     {   // 조리 기구의 상태를 가져오기, 완료된 조리 상태의 재료를 수거
                         if(trTarget.GetComponent<CookingAppliances>().GetApplianceState() == eApplianceState.COMPLETE)
                         {
-                            trTarget.GetComponentInChildren<Ingredient>().transform.parent = IngredientPoint.transform;
+                            possesingIngredient = trTarget.GetComponentInChildren<Ingredient>().gameObject;
+                            possesingIngredient.transform.parent = IngredientPoint.transform;
                             isHavingIngredient = true;
                             trTarget.GetComponent<CookingAppliances>().SetApplianceReady();
                             SoundManager.Instance.GetIngredient();

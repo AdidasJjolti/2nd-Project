@@ -13,13 +13,13 @@ public enum eIngredientType
     FLOUR,
     POTATO,
     
-    GRILLED_MEAT = 101,
-    GRILLED_TOMATO,
-    STEAMED_EGG,
-    FRIED_EGG,
-    PIZZA_DOUGH,
-    STEAMED_POTATO,
-    FRIED_POTATO
+    GRILLED_MEAT = 100,                  // 구운 고기
+    GRILLED_TOMATO,                      // 구운 토마토
+    STEAMED_EGG,                         // 삶은 계란
+    FRIED_EGG,                           // 계란 후라이
+    PIZZA_DOUGH,                         // 피자 도우
+    STEAMED_POTATO,                      // 삶은 감자
+    FRIED_POTATO                         // 감자 튀김
 }
 
 
