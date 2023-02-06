@@ -74,7 +74,7 @@ public class CookingPlate : MonoBehaviour
             // 맞는 레시피가 없으면 탈출
             if (completeFoodID == -1)
             {
-                GameManager.Instance.missCount++;      // 미스 카운트 UI 퀘스트를 위한 임시 코드, ToDo : 미스 카운트 UI 개선
+                GameManager.Instance.CountMissCount();      // 미스 카운트 UI 퀘스트를 위한 임시 코드, ToDo : 미스 카운트 UI 개선
                 return false;
             }
 

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.IO;
+using UnityEngine.UI;
 
 public enum eApplianceType
 {
-    MICROWAVE = 0,
-    STOVE,
+    STOVE = 0,
+    MICROWAVE,
     DOUGH,
     FRYING_PAN
 }
@@ -26,10 +27,23 @@ public class CookingAppliances : MonoBehaviour
     [SerializeField] private Transform cookingPoint;
     List<int> recipeList;
 
+    [SerializeField] private GameObject applianceStates;
+    [SerializeField] private Sprite[] stateImages;
+    private Image stateIcon;
+
+    Camera camera;
+
     void Awake()
     {
         state = eApplianceState.READY;
         Player.StartCooking += Cooking;
+    }
+
+    void Start()
+    {
+        camera = Camera.main;
+        applianceStates.transform.position = camera.WorldToScreenPoint(cookingPoint.position + new Vector3(2, 1, 6));
+        stateIcon = applianceStates.transform.GetChild(1).GetComponent<Image>();
     }
 
     void Update()
@@ -46,6 +60,8 @@ public class CookingAppliances : MonoBehaviour
     public void SetApplianceReady()
     {
         state = eApplianceState.READY;
+        // 요리 준비 상태면 요리 기구 상태 이미지 교체
+        stateIcon.sprite = stateImages[(int)state];
     }
 
     //cookingIngredient = 조리 기구에 투입할 재료, 플레이어가 가지고 있는 재료 게임오브젝트
@@ -100,6 +116,10 @@ public class CookingAppliances : MonoBehaviour
         objIngredient.transform.localPosition = new Vector3(0, 0, 0);
 
         state = eApplianceState.COOKING;
+
+        // 요리중 상태면 요리 기구 상태 이미지 교체
+        stateIcon.sprite = stateImages[(int)state];
+
         float waitTime = 0;
 
         while (waitTime <= 5)
@@ -109,6 +129,9 @@ public class CookingAppliances : MonoBehaviour
         }
 
         state = eApplianceState.COMPLETE;
+        // 요리 완료 상태면 요리 기구 상태 이미지 교체
+        stateIcon.sprite = stateImages[(int)state];
+
 
         // 요리될 예정인 재료의 ingredientType을 반환하기 위해 읍합법 키 값으로 반환된 결과값을 매개 변수로 전달
         //ingre.SetCookingResultID(cookedIngredient);
@@ -124,7 +147,7 @@ public class CookingAppliances : MonoBehaviour
 
     void AddMissCount(GameObject objIngredient)
     {
-        GameManager.Instance.missCount += 1;
+        GameManager.Instance.CountMissCount();
         Debug.Log("Miss Count +1");
         Destroy(objIngredient);
     }

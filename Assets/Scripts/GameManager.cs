@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider stageTimerSlider;
     [SerializeField] private TextMeshProUGUI stageTimer;
 
+    public int maxmissCount;
     public int missCount;
-    [SerializeField] private TextMeshProUGUI missCountText;
+    [SerializeField] private Image[] missCountImages;
 
     public bool isTimeCheat;
        
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SettingsPopup.SetActive(false);
-        maxstageTime = 10;
+        maxstageTime = 15;
     }
 
     void Start()
@@ -64,6 +65,12 @@ public class GameManager : MonoBehaviour
         curstageTime = maxstageTime;
         dicRecipe = CSVReader.Read("recipe");
         dicCompleteFood = CSVReader.ReadCompleteFood("complete_food");
+
+        maxmissCount = 3;
+        for(int i = 0; i < maxmissCount; i++)
+        {
+            missCountImages[i].gameObject.SetActive(true);
+        }
     }
 
     void Update()
@@ -71,7 +78,6 @@ public class GameManager : MonoBehaviour
         OpenSettingsPopup();
         TimeCheat();
         CountStageTime();
-        CountMissCount();
     }
 
     void OpenSettingsPopup()
@@ -119,7 +125,18 @@ public class GameManager : MonoBehaviour
             OpenGameOverUI();
         }
 
-        stageTimer.text = ((int)curstageTime).ToString();
+        if(curstageTime > 10)
+        {
+            stageTimer.text = ((int)curstageTime).ToString();
+        }
+        else if (curstageTime > 0)
+        {
+            stageTimer.text = $"{curstageTime:0.0}";
+        }
+        else
+        {
+            stageTimer.text = "0";
+        }
     }
 
     void OpenGameOverUI()
@@ -144,9 +161,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CountMissCount()
+    public void CountMissCount()
     {
-        missCountText.text = ((int)missCount).ToString();
+        missCount++;
+
+        for (int i = 0; i < maxmissCount; i++)
+        {
+            missCountImages[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < (maxmissCount - missCount); i++)
+        {
+            missCountImages[i].gameObject.SetActive(true);
+        }
+
+        if(missCount >= maxmissCount)
+        {
+            OpenGameOverUI();
+        }
     }
 
     /// <summary>
