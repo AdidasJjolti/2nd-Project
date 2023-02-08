@@ -19,9 +19,13 @@ public enum eIngredientType
     FRIED_EGG,                           // 계란 후라이
     PIZZA_DOUGH,                         // 피자 도우
     STEAMED_POTATO,                      // 삶은 감자
-    FRIED_POTATO,                        // 감자 튀김
+    FRIED_POTATO = 1006,                 // 감자 튀김
     SALAD,                               // 샐러드
-    STEAK_MEAL                           // 스테이크 세트
+    STEAK_MEAL,                          // 스테이크 세트
+    MAX,
+
+    START = FRIED_POTATO,
+    END = STEAK_MEAL
 }
 
 
