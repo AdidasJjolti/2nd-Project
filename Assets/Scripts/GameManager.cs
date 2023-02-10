@@ -42,6 +42,13 @@ public class GameManager : MonoBehaviour
        
     Dictionary<(int, int), int> dicRecipe;
     Dictionary<(int, int, int), int> dicCompleteFood;
+    Dictionary<int, (int, int, int)> dicOrder = new Dictionary<int, (int, int, int)>();
+
+    int maxOrder = 3;                                            // 최대 주문 갯수
+    float orderInterval = 5f;                                    // 다음 주문 들어오는 시간 간격
+    [SerializeField] private Sprite[] foodSprites;               // 주문 UI에 표시할 음식 스프라이트 배열
+    List<GameObject> orderList = new List<GameObject>();
+    [SerializeField] GameObject objOrder;
 
     void Awake()
     {
@@ -66,11 +73,18 @@ public class GameManager : MonoBehaviour
         dicRecipe = CSVReader.Read("recipe");
         dicCompleteFood = CSVReader.ReadCompleteFood("complete_food");
 
+        foreach (var item in dicCompleteFood)
+        {
+            dicOrder[item.Value] = item.Key;     // '딕셔너리명[키] = 밸류'로 dicOrder 딕셔너리 정의
+        }
+
         maxmissCount = 3;
         for(int i = 0; i < maxmissCount; i++)
         {
             missCountImages[i].gameObject.SetActive(true);
         }
+
+        InvokeRepeating("ReceiveOrder", 5f, 5f);
     }
 
     void Update()
@@ -212,5 +226,25 @@ public class GameManager : MonoBehaviour
         }
 
         return dicCompleteFood[(tupleList[0], tupleList[1], tupleList[2])];
+    }
+
+    public void ReceiveOrder()
+    {
+        // 주문이 가득찬 상태면 더 이상 주문 받지 않음
+        if(orderList.Count >= maxOrder)
+        {
+            return;
+        }
+        // 1006 ~ 1008 사이에서 주문 받은 음식 인덱스 결정
+        int foodIndex = (Random.Range((int)eIngredientType.START, (int)eIngredientType.MAX)%100) - 6;
+        // foodSprites에서 주문UI에 표시할 음식 스프라이트 저장
+        Sprite foodSprite = foodSprites[foodIndex];
+        // 주문 들어온 UI 게임오브젝트 생성 후 부모 오브젝트의 자식으로 설정
+        GameObject orderObject = Instantiate(objOrder, GameObject.Find("OrderUI").transform.position, Quaternion.identity, GameObject.Find("OrderUI").transform);
+        orderObject.transform.localScale = new Vector3(1, 1, 1);
+        orderObject.transform.parent = GameObject.Find("OrderUI").transform;
+        orderList.Add(orderObject);
+        // 생성한 주문 UI 게임오브젝트의 음식 스프라이트 지정
+        orderObject.GetComponent<UIOrder>().SetIFoodImages(foodSprite);
     }
 }
