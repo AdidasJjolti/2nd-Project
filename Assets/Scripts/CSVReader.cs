@@ -118,7 +118,7 @@ public class CSVReader
             tupleList.Sort();                                          // 오름차순으로 id 정렬
 
             var tupleID = (tupleList[0], tupleList[1], tupleList[2]);  // 딕셔너리 key값이 되는 재료1 id, 재료2 id, 재료3 id 튜플
-            Debug.Log($"{tupleList[0]}, {tupleList[1]}, {tupleList[2]}");
+            //Debug.Log($"{tupleList[0]}, {tupleList[1]}, {tupleList[2]}");
 
             // 엑셀에서 여덟 번째(E) 열 (=음식) 파싱하기
             string food = values[7];

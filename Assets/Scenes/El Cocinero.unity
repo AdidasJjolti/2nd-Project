@@ -2238,6 +2238,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3e87ea83400ebb64ca0d3acc4ac08053, type: 3}
   - {fileID: 21300000, guid: 7717be75509f50c498294eee5637d088, type: 3}
   - {fileID: 21300000, guid: 57b2adab335875a4189ca8ccc804ebaf, type: 3}
+  ingredientSprites:
+  - {fileID: 21300000, guid: c5bd204a2b9a95946a40797d894fed53, type: 3}
+  - {fileID: 21300000, guid: d76a13276d3ece549859f647492277d1, type: 3}
+  - {fileID: 21300000, guid: 0cf14ce34118659459b54ccfce8c0eaa, type: 3}
+  - {fileID: 21300000, guid: 3fa96c54cf40d0d4f8011f685e44de8e, type: 3}
+  - {fileID: 21300000, guid: 073e6730fc966944eaa47449d1c6cc16, type: 3}
+  - {fileID: 21300000, guid: f726be45d2eae2f4fbae18808fb4d7aa, type: 3}
+  applianceSprites:
+  - {fileID: 21300000, guid: 47b4a027fa66b8f40830c78f9483c117, type: 3}
+  - {fileID: 21300000, guid: b1ef6d28218868a4e8ea17653c0fd005, type: 3}
+  - {fileID: 21300000, guid: a865435bd732b9e4285349ee825abf1b, type: 3}
+  - {fileID: 21300000, guid: 8baf909de15d4774db218a48fa65de67, type: 3}
   objOrder: {fileID: 6899833466343240362, guid: 8573a9cb4090b894781b46b8fa42b1c6, type: 3}
 --- !u!4 &465479129
 Transform:
@@ -2274,6 +2286,8 @@ MonoBehaviour:
   - {fileID: 3853403765689606309, guid: 8b33e34ec5990da48adbe796206bc032, type: 3}
   - {fileID: 3309692696946838617, guid: c2ab1412ef912ee4e87818cbc1562962, type: 3}
   - {fileID: 4201934513215695567, guid: ecec4dafd54a065468c4729e0a7d00e4, type: 3}
+  - {fileID: 2779210268690799651, guid: c629efa5684aec845bb5ddffd8d13040, type: 3}
+  - {fileID: 5179583952734943728, guid: bdf9887ce0cae0043a06f9d694e68e54, type: 3}
 --- !u!1 &473541620
 GameObject:
   m_ObjectHideFlags: 0

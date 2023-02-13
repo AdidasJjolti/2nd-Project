@@ -33,13 +33,27 @@ public class UIOrder : MonoBehaviour
         imgFood.color = new Color(1, 1, 1, 1);
     }
 
-    public void SetIIngredientImages()
+    public void SetIIngredientImages(Sprite ingreSprite, int index)
     {
-
+        if(ingreSprite == null)
+        {
+            imgIngredient[index].color = new Color(0, 0, 0, 0);
+            return;
+        }
+        // 재료 이미지 세팅, 이미지 알파값 1로 변경
+        imgIngredient[index].sprite = ingreSprite;
+        imgIngredient[index].color = new Color(1, 1, 1, 1);
     }
 
-    public void SetIApplianceImages()
+    public void SetIApplianceImages(Sprite applianceSprite, int index)
     {
-
+        if (applianceSprite == null)
+        {
+            imgAppliance[index].color = new Color(0, 0, 0, 0);
+            return;
+        }
+        // 요리 기구 이미지 세팅, 이미지 알파값 1로 변경
+        imgAppliance[index].sprite = applianceSprite;
+        imgAppliance[index].color = new Color(1, 1, 1, 1);
     }
 }

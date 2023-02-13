@@ -1,4 +1,4 @@
 ingredient1,ingredient1_id,ingredient2,ingredient2_id,ingredient3,ingredient3_id,complete,complete_id
 lettuce,0,tomato,2,steamed_egg,102,salad,1007
 -,-1,-,-1,fried_potato,1006,fried_potato,1006
--,-1,grilled_meat,100,fried_potato,106,steak_meal,1008
+-,-1,grilled_meat,100,fried_potato,1006,steak_meal,1008

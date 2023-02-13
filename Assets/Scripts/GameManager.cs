@@ -41,12 +41,17 @@ public class GameManager : MonoBehaviour
     public bool isTimeCheat;
        
     Dictionary<(int, int), int> dicRecipe;
+    Dictionary<int, (int, int)> dicRecipeWiki = new Dictionary<int, (int, int)>();            // Key : 요리된 재료id, Value : (원재료id, 요리 기구id)   
+                                                                                              // dicOrder에서 받아온 키 값으로 원재료, 요리 기구를 주문 UI에 표시
     Dictionary<(int, int, int), int> dicCompleteFood;
-    Dictionary<int, (int, int, int)> dicOrder = new Dictionary<int, (int, int, int)>();
+    Dictionary<int, (int, int, int)> dicOrder = new Dictionary<int, (int, int, int)>();       // Key : 완성 음식id, Value : (요리된 재료1id, 요리된 재료2id, 요리된 재료3id)
+                                                                                              // dicCompleteFood의 value를 주문 UI의 음식 스프라이트 인덱스로 사용
 
     int maxOrder = 3;                                            // 최대 주문 갯수
     float orderInterval = 5f;                                    // 다음 주문 들어오는 시간 간격
     [SerializeField] private Sprite[] foodSprites;               // 주문 UI에 표시할 음식 스프라이트 배열
+    [SerializeField] private Sprite[] ingredientSprites;         // 주문 UI에 표시할 원재료 스프라이트 배열
+    [SerializeField] private Sprite[] applianceSprites;          // 주문 UI에 표시할 요리 기구 스프라이트 배열
     List<GameObject> orderList = new List<GameObject>();
     [SerializeField] GameObject objOrder;
 
@@ -70,14 +75,21 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         curstageTime = maxstageTime;
+
         dicRecipe = CSVReader.Read("recipe");
         dicCompleteFood = CSVReader.ReadCompleteFood("complete_food");
 
         foreach (var item in dicCompleteFood)
         {
-            dicOrder[item.Value] = item.Key;     // '딕셔너리명[키] = 밸류'로 dicOrder 딕셔너리 정의
+            dicOrder[item.Value] = item.Key;           // '딕셔너리명[키] = 밸류'로 dicOrder 딕셔너리 정의
         }
 
+        foreach (var item in dicRecipe)
+        {
+            dicRecipeWiki[item.Value] = item.Key;      // '딕셔너리명[키] = 밸류'로 dicRecipeWiki 딕셔너리 정의
+        }
+
+        // 미스카운트 계산
         maxmissCount = 3;
         for(int i = 0; i < maxmissCount; i++)
         {
@@ -231,20 +243,73 @@ public class GameManager : MonoBehaviour
     public void ReceiveOrder()
     {
         // 주문이 가득찬 상태면 더 이상 주문 받지 않음
-        if(orderList.Count >= maxOrder)
+        if (orderList.Count >= maxOrder)
         {
             return;
         }
+
         // 1006 ~ 1008 사이에서 주문 받은 음식 인덱스 결정
-        int foodIndex = (Random.Range((int)eIngredientType.START, (int)eIngredientType.MAX)%100) - 6;
+        int foodIndex = (Random.Range((int)eIngredientType.START, (int)eIngredientType.MAX) % 100) - 6;
+
         // foodSprites에서 주문UI에 표시할 음식 스프라이트 저장
         Sprite foodSprite = foodSprites[foodIndex];
+
         // 주문 들어온 UI 게임오브젝트 생성 후 부모 오브젝트의 자식으로 설정
         GameObject orderObject = Instantiate(objOrder, GameObject.Find("OrderUI").transform.position, Quaternion.identity, GameObject.Find("OrderUI").transform);
         orderObject.transform.localScale = new Vector3(1, 1, 1);
         orderObject.transform.parent = GameObject.Find("OrderUI").transform;
         orderList.Add(orderObject);
+
         // 생성한 주문 UI 게임오브젝트의 음식 스프라이트 지정
         orderObject.GetComponent<UIOrder>().SetIFoodImages(foodSprite);
+
+        // foodIndex로 각 요리 재료의 원재료id, 요리기구id 출력
+        var cookedIngre = dicOrder[(foodIndex + (int)eIngredientType.START)];
+        List<int> sortedIngre = new List<int>();
+        sortedIngre.Add(cookedIngre.Item1);
+        sortedIngre.Add(cookedIngre.Item2);
+        sortedIngre.Add(cookedIngre.Item3);
+
+        sortedIngre.Sort((a, b) =>
+        {
+            int result = b.CompareTo(a);
+            return result;
+        });
+
+        for(int i = 0; i < sortedIngre.Count; i++)
+        {
+            CheckRecipeWiki(sortedIngre[i], i, orderObject);
+        }
+    }
+
+    /// <summary>
+    /// 1. cookedIngre value 중에서 -1이 있는지 체크 (재료가 없음)
+    /// 2. cookedIngre value가 -1이 아닌 것 중에서 요리 기구가 -1인지 체크   =>  recipe에서 찾을 수 있는 key가 없음 (조리가 없음)
+    /// 3. cookedIngre value가 -1이 아닌 것 중에서 요리 기구도 -1이 아닌지 체크 (조리할 재료가 있음)
+    /// </summary>
+    /// <param name="cookedIngreCheck"></param>
+    /// <param name="orderObj"></param>
+    void CheckRecipeWiki(int cookedIngreCheck, int orderIndex, GameObject orderObj)
+    {
+        // 1. cookedIngre value 중에서 -1이 있는지 체크
+        if(cookedIngreCheck == -1)
+        {
+            orderObj.GetComponent<UIOrder>().SetIIngredientImages(null, orderIndex);
+        }
+        // 2. cookedIngre value가 -1이 아닌 것 중에서 요리 기구가 -1인지 체크  =>  recipe에서 찾을 수 있는 key가 없음 (조리가 없음)
+        else if (dicRecipeWiki.ContainsKey(cookedIngreCheck) == false)
+        {
+            Debug.Log(cookedIngreCheck);
+            Sprite ingredientSprite = ingredientSprites[cookedIngreCheck > 1000 ? cookedIngreCheck%100 - 1 : cookedIngreCheck];
+            orderObj.GetComponent<UIOrder>().SetIIngredientImages(ingredientSprite, orderIndex);
+        }
+        // 3. cookedIngre value가 -1이 아닌 것 중에서 요리 기구도 -1이 아닌지 체크 (조리할 재료가 있음)
+        else
+        {
+            Sprite ingredientSprite = ingredientSprites[dicRecipeWiki[cookedIngreCheck].Item1];
+            Sprite applianceSprite = applianceSprites[dicRecipeWiki[cookedIngreCheck].Item2];
+            orderObj.GetComponent<UIOrder>().SetIIngredientImages(ingredientSprite, orderIndex);
+            orderObj.GetComponent<UIOrder>().SetIApplianceImages(applianceSprite, orderIndex);
+        }
     }
 }
