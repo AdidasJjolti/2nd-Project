@@ -74,7 +74,7 @@ public class CookingPlate : MonoBehaviour
             // 맞는 레시피가 없으면 탈출
             if (completeFoodID == -1)
             {
-                GameManager.Instance.CountMissCount();      // 미스 카운트 UI 퀘스트를 위한 임시 코드, ToDo : 미스 카운트 UI 개선
+                GameManager.Instance.CountMissCount();
                 return false;
             }
 
@@ -111,8 +111,9 @@ public class CookingPlate : MonoBehaviour
                     }
                 }
             }
-            // ToDo : 게임 매니저 or 스테이지 매니저에서 점수 올리기
+
             Debug.Log("100 Points");
+            GameManager.Instance.AddGameScore();
         }
 
         state = ePlateState.READY;

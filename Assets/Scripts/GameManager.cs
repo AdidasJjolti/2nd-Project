@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     private float curstageTime;
     [SerializeField] private Slider stageTimerSlider;
     [SerializeField] private TextMeshProUGUI stageTimer;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    private int gameScore;
 
     public int maxmissCount;
     public int missCount;
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
 
         SettingsPopup.SetActive(false);
         maxstageTime = 15;
+        gameScore = 0;
     }
 
     void Start()
@@ -311,5 +314,11 @@ public class GameManager : MonoBehaviour
             orderObj.GetComponent<UIOrder>().SetIIngredientImages(ingredientSprite, orderIndex);
             orderObj.GetComponent<UIOrder>().SetIApplianceImages(applianceSprite, orderIndex);
         }
+    }
+
+    public void AddGameScore()
+    {
+        gameScore += 1000;
+        scoreText.text = string.Format("{0:#,###}", (int)gameScore);
     }
 }
